@@ -145,12 +145,20 @@ class Home extends Component {
         this.setState({comments: comentInfoState});
         console.log(this.state.comments);
     }
+    onSearchTextChangedHandler = (e) => {
+        console.log(e.target.value);
+        console.log(this.state.postDetailsSnapshot[0].caption.text.indexOf("join"));
+        let cardsToDisplay = this.state.postDetailsSnapshot.filter((post)=>{
+           return post.caption.text.toUpperCase().indexOf(""+e.target.value.toUpperCase())!=-1
+        });
+        this.setState({postDetails: cardsToDisplay});
+    }
     render() {
         const { classes } = this.props;
        // let index=0;
         return (
             <div>
-                <Header />
+                <Header onSearchTextChanged={this.onSearchTextChangedHandler} />
                 <GridList cols={2} cellHeight={750} cols={2} className={classes.gridListMain}>
                     {this.state.postDetails.map((post, index) => (
                         <GridListTile key={"title" + post.id} style={{height:'100%'}}>
