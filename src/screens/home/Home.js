@@ -4,15 +4,60 @@ import './Home.css';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import Avatar from '@material-ui/core/Avatar';
+import CardContent from '@material-ui/core/CardContent';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper
+    },
+    upcomingMoviesHeading: {
+        textAlign: 'center',
+        background: '#ff9999',
+        padding: '8px',
+        fontSize: '1rem'
+    },
+    gridListUpcomingMovies: {
+        flexWrap: 'nowrap',
+        transform: 'translateZ(0)',
+        width: '100%'
+    },
+    gridListMain: {
+        transform: 'translateZ(0)',
+        cursor: 'pointer'
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 240,
+        maxWidth: 240
+    },
+    title: {
+        color: theme.palette.primary.light,
+    }
+});
+const cardStyle = {
+    // margin: 'auto',
+    width: '100%',
+    height: '100%',
+    padding: 50,
+}
 class Home extends Component {
 
-constructor(){
-    super();
-    this.state = {
-        postDetails: []
+    constructor() {
+        super();
+        this.state = {
+            postDetails: []
+        }
     }
-}
 
     componentWillMount() {
         let data = null;
@@ -28,17 +73,60 @@ constructor(){
         });
 
         xhr.open("GET", "https://api.instagram.com/v1/users/self/media/recent?access_token=8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
-       // xhr.setRequestHeader("Cache-Control", "no-cache");
-    //    xhr.setRequestHeader("cor");
+        // xhr.setRequestHeader("Cache-Control", "no-cache");
+        //    xhr.setRequestHeader("cor");
         xhr.send(data);
 
     }
 
     render() {
+        const { classes } = this.props;
         return (
-           <div><Header/>Home</div>
+            <div>
+                <Header />
+                <GridList cols={2} cellHeight={750} cols={2} className={classes.gridListMain}>
+                    {this.state.postDetails.map(post => (
+                        <GridListTile key={"title" + post.id} style={{ border: "1px solid black" }}>
+                            <Card style={{ cardStyle }} variant="outlined">
+                                <CardContent>
+                                    <Avatar alt={post.user.full_name} src={post.user.profile_picture} />
+                                    <span>
+                                        {post.user.username}
+                                        {post.created_time}
+                                        {new Date(post.created_time).toString("MMM dd")}
+                                    </span>
+                                    <img src={post.images.standard_resolution.url} />
+                                    <div>
+                                        {post.caption.text}
+                                    </div>
+                                    <div>
+                                        {post.tags.map(tag => (
+                                            <span key={"tags" + tag}>#{tag}</span>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        <span> <FavoriteBorderOutlinedIcon /></span>
+                                        <span>{post.likes.count}</span>
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                    <div>
+                                        <FormControl required style={{ width: "100%" }}>
+                                            <InputLabel htmlFor="username">Username</InputLabel>
+                                            <Input type="text" />
+                                        </FormControl>
+                                        <Button className="login-button" variant="contained" color="primary">Add</Button>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </GridListTile>
+                    ))}
+
+                </GridList>
+            </div>
         )
     }
 }
 
-export default Home;
+export default withStyles(styles)(Home);
