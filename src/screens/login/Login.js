@@ -32,71 +32,37 @@ const useStyles = {
         width: '25%',
         padding: 50,
         
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
+    }
   };
 class Login extends Component {
 
     constructor() {
         super();
         this.state = {
-            modalIsOpen: true,
-            value: 0,
+            loginFormInvalid: "dispNone",
             usernameRequired: "dispNone",
             username: "",
             loginPasswordRequired: "dispNone",
-            loginPassword: "",
-            firstnameRequired: "dispNone",
-            firstname: "",
-            lastnameRequired: "dispNone",
-            lastname: "",
-            emailRequired: "dispNone",
-            email: "",
-            registerPasswordRequired: "dispNone",
-            registerPassword: "",
-            contactRequired: "dispNone",
-            contact: ""
+            loginPassword: ""
         }
     }
 
-    openModalHandler = () => {
-        this.setState({
-            modalIsOpen: true,
-            value: 0,
-            usernameRequired: "dispNone",
-            username: "",
-            loginPasswordRequired: "dispNone",
-            loginPassword: "",
-            firstnameRequired: "dispNone",
-            firstname: "",
-            lastnameRequired: "dispNone",
-            lastname: "",
-            emailRequired: "dispNone",
-            email: "",
-            registerPasswordRequired: "dispNone",
-            registerPassword: "",
-            contactRequired: "dispNone",
-            contact: ""
-        });
-    }
-
-    closeModalHandler = () => {
-        this.setState({ modalIsOpen: false });
-    }
-
     loginClickHandler = () => {
+        const userName = 'user';
+        const pwd = 'password';
+        const accessToken = '8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784';
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
         this.state.loginPassword === "" ? this.setState({ loginPasswordRequired: "dispBlock" }) : this.setState({ loginPasswordRequired: "dispNone" });
+        if( this.state.username === "" ||  this.state.loginPassword === ""){
+            this.setState({ loginFormInvalid: "dispNone" });
+            return;
+        };
+        if(this.state.username !== userName || this.state.loginPassword !== pwd) {
+            this.setState({ loginFormInvalid: "dispBlock" });
+            return;
+        } else {
+            this.setState({ loginFormInvalid: "dispNone" });
+        }
     }
 
     inputUsernameChangeHandler = (e) => {
@@ -115,7 +81,7 @@ class Login extends Component {
                 <div>&nbsp;</div>
                  <Card style={useStyles.card} variant="outlined">
                  <CardContent >
-                <Typography variant="headline" component="h4" >
+                <Typography variant="headline" component="h6" >
                   LOGIN
                 </Typography>
                     <FormControl required style={{width: "100%"}}>
@@ -133,7 +99,11 @@ class Login extends Component {
                             <span className="red">required</span>
                         </FormHelperText>
                     </FormControl>
-                    <br /><br />
+                    <br />
+                    <FormHelperText className={this.state.loginFormInvalid}>
+                    <span className="red">  Incorrect username and/or password</span>
+                        </FormHelperText>
+                    <br />
                     <Button className="login-button" variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
                     </CardContent>
                 </Card>
