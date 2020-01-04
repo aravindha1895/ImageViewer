@@ -1,5 +1,14 @@
-img {
+.postImage {
     object-fit: fill;
     width: 100%;
     height: 100%
+}
+.MuiTypography-h5{
+    font-size: 20px;
+}
+.tags{
+    display:inline;
+}
+.commentAuthor{
+    font-weight: bold;
 }
