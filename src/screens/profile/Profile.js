@@ -122,54 +122,71 @@ class Profile extends Component {
         return (
             <div>
                 <Header />
+                <br/><br/>
                 <div className="profile_info">
-                    Profile page
-                    <Avatar aria-label="recipe" src={this.state.profileDetails.profile_picture}>
-                    </Avatar>
-                    <div>
-                        {this.state.profileDetails.username}
+                    <div id="avatar">
+                        <Avatar aria-label="recipe" src={this.state.profileDetails.profile_picture}>
+                        </Avatar>
                     </div>
-                    <div>
-                        <span> {this.state.profileStats.media}</span>
-                        <span> {this.state.profileStats.follows}</span>
-                        <span> {this.state.profileStats.followed_by}</span>
-                    </div>
-                    <div>
-                        {this.state.profileDetails.full_name}
-                    </div>
-                    <div className="edit_button">
-                        <Fab color="secondary" aria-label="edit" onClick={this.openModelHandler}>
-                            <EditIcon />
-                        </Fab>
-                        <Modal
-                            ariaHideApp={false}
-                            isOpen={this.state.modalIsOpen}
-                            contentLabel="Login"
-                            onRequestClose={this.closeModalHandler}
+                    <div id="header-details">
+                        <div>
+                            <Typography variant="subtitle"  >
+                                {this.state.profileDetails.username}
+                            </Typography>
+                        </div>
+                        <Typography variant="caption"  >
+                            <div id="statInfo">
+                                <span className="stat">Posts: {this.state.profileStats.media}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span className="stat">Follows: {this.state.profileStats.follows}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span className="stat">Followed By: {this.state.profileStats.followed_by}</span>
+                            </div>
+                        </Typography>
+                        <div id="editSection">
+                            <div>
+                                {this.state.profileDetails.full_name}
+                            </div>
+                            <div>&nbsp;&nbsp;&nbsp;</div>
+                            <div className="edit_button">
+                                <Fab size="small" color="secondary" aria-label="edit" onClick={this.openModelHandler}>
+                                    <EditIcon />
+                                </Fab>
+                                <Modal
+                                    ariaHideApp={false}
+                                    isOpen={this.state.modalIsOpen}
+                                    contentLabel="Login"
+                                    onRequestClose={this.closeModalHandler}
 
-                        >
-                            <FormControl required>
-                                <InputLabel htmlFor="fullname">Full Name</InputLabel>
-                                <Input id="fullname" type="text" fullname={this.state.fullNameField} onChange={this.inputNameChangeHandler} />
-                                <FormHelperText className={this.state.fullnameRequired}>
-                                    <span className="red">required</span>
-                                </FormHelperText>
-                            </FormControl>
-                            <Button className="login-button" variant="contained" color="primary" onClick={this.onUpdateButtonClickHandler}>Update</Button>
-                        </Modal>
+                                >
+                                    <Typography variant="headline" component="h6" >
+                                        Edit
+                            </Typography>
+                                    <FormControl required>
+                                        <InputLabel htmlFor="fullname">Full Name</InputLabel>
+                                        <Input id="fullname" type="text" fullname={this.state.fullNameField} onChange={this.inputNameChangeHandler} />
+                                        <FormHelperText className={this.state.fullnameRequired}>
+                                            <span className="red">required</span>
+                                        </FormHelperText>
+                                    </FormControl>
+                                    <Button className="login-button" variant="contained" color="primary" onClick={this.onUpdateButtonClickHandler}>Update</Button>
+                                </Modal>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div >
+                <br/><br/><br/>
                 <div className="image_posts">
-                    <GridList cellHeight={160}  cols={3} style={{marginLeft: "15%", marginRight:"10%",textAlign:"center"}}>
-                    {this.state.postDetails.map((post, index) => (
-                            <GridListTile key={"postImg" + post.id} style={{ height:'300px', width: '300px'}}>
-                                <img src={post.images.standard_resolution.url} alt={post.caption.text} className="postImage"/>
+                    <GridList cellHeight={160} cols={3} style={{ marginLeft: "15%", marginRight: "10%", textAlign: "center" }}>
+                        {this.state.postDetails.map((post, index) => (
+                            <GridListTile key={"postImg" + post.id} style={{ height: '300px', width: '300px' }}>
+                                <img src={post.images.standard_resolution.url} alt={post.caption.text} className="postImage" />
                             </GridListTile>
                         ))}
                     </GridList>
                 </div>
 
-            </div>
+            </div >
         )
     }
 }
