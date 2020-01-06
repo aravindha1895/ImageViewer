@@ -112,9 +112,9 @@ class Profile extends Component {
     }
     onUpdateButtonClickHandler = (e) => {
         this.state.fullNameField === "" ? this.setState({ fullnameRequired: "dispBlock" }) : this.setState({ fullnameRequired: "dispNone" });
-        if(this.state.fullNameField === "") return;
+        if (this.state.fullNameField === "") return;
         const profDetails = this.state.profileDetails;
-        profDetails.full_name=this.state.fullNameField;
+        profDetails.full_name = this.state.fullNameField;
         this.setState({ profileDetails: profDetails });
         this.setState({ modalIsOpen: false });
     }
@@ -139,7 +139,7 @@ class Profile extends Component {
                     </div>
                     <div className="edit_button">
                         <Fab color="secondary" aria-label="edit" onClick={this.openModelHandler}>
-                            <EditIcon  />
+                            <EditIcon />
                         </Fab>
                         <Modal
                             ariaHideApp={false}
@@ -150,7 +150,7 @@ class Profile extends Component {
                         >
                             <FormControl required>
                                 <InputLabel htmlFor="fullname">Full Name</InputLabel>
-                                <Input id="fullname" type="text" fullname= {this.state.fullNameField} onChange={this.inputNameChangeHandler} />
+                                <Input id="fullname" type="text" fullname={this.state.fullNameField} onChange={this.inputNameChangeHandler} />
                                 <FormHelperText className={this.state.fullnameRequired}>
                                     <span className="red">required</span>
                                 </FormHelperText>
@@ -158,6 +158,15 @@ class Profile extends Component {
                             <Button className="login-button" variant="contained" color="primary" onClick={this.onUpdateButtonClickHandler}>Update</Button>
                         </Modal>
                     </div>
+                </div>
+                <div className="image_posts">
+                    <GridList cellHeight={160}  cols={3} style={{marginLeft: "15%", marginRight:"10%",textAlign:"center"}}>
+                    {this.state.postDetails.map((post, index) => (
+                            <GridListTile key={"postImg" + post.id} style={{ height:'300px', width: '300px'}}>
+                                <img src={post.images.standard_resolution.url} alt={post.caption.text} className="postImage"/>
+                            </GridListTile>
+                        ))}
+                    </GridList>
                 </div>
 
             </div>
