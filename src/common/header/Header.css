@@ -20,3 +20,6 @@
     height: 0.2px;
     border: 1px solid black;
 }
+#appName{
+    cursor: pointer;
+}

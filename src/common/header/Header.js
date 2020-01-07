@@ -30,11 +30,17 @@ const Header = function (props){
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const handleLogout = () => {
+        sessionStorage.removeItem('access-token');
+    }
+    const onLogoClickedHandler = () => {
+        console.log('onLogoClickedHandler add routing here');
+    }
    // render() {   
         return (
             <div>
                 <header className="app-header" >
-                    <p id="appName"> Image Viewer </p>
+                    <p id="appName" onClick={()=>{onLogoClickedHandler();}}> Image Viewer </p>
                     {(props.parentPage =="home" || props.parentPage =="profile")?
                         <span className="home-group" >
                             { props.parentPage =="home" &&
@@ -59,8 +65,9 @@ const Header = function (props){
                                 open={Boolean(anchorEl)}
                                 
                             >
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
-                                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                 { props.parentPage =="home" &&
+                                <MenuItem onClick={handleClose}>My account</MenuItem>}
+                                <MenuItem onClick={()=>{handleClose(); handleLogout();}}>Logout</MenuItem>
                             </Menu>
                         </span>
                         : ""}
