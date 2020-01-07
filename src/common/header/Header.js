@@ -35,9 +35,9 @@ const Header = function (props){
             <div>
                 <header className="app-header" >
                     <p id="appName"> Image Viewer </p>
-                    {"true" === "true" ?
+                    {(props.parentPage =="home" || props.parentPage =="profile")?
                         <span className="home-group" >
-
+                            { props.parentPage =="home" &&
                             <FilledInput id="outlined-basic" placeholder="Search..." variant="outlined"
                                 onChange={(e) => props.onSearchTextChanged(e)}
                                 startAdornment={(
@@ -48,6 +48,7 @@ const Header = function (props){
                                 )}
 
                             />
+                                }
                             <Avatar aria-label="recipe" src={props.profileUrl} style={{ float: "right", marginLeft: "10px", cursor: "pointer" }} onClick={handleClick} >
                                 
                                 </Avatar>
