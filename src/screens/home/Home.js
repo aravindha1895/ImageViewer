@@ -158,7 +158,7 @@ class Home extends Component {
        // let index=0;
         return (
             <div>
-                <Header onSearchTextChanged={this.onSearchTextChangedHandler} />
+                <Header onSearchTextChanged={this.onSearchTextChangedHandler} profileUrl={this.state.profileDetails.profile_picture} parentPage="home" />
                 <GridList cols={2} cellHeight={750} cols={2} className={classes.gridListMain}>
                     {this.state.postDetails.map((post, index) => (
                         <GridListTile key={"title" + post.id} style={{height:'100%'}}>
