@@ -29,6 +29,28 @@ import EditIcon from '@material-ui/icons/Edit';
 import Modal from 'react-modal';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+const stylings ={
+    tagStyle: {
+        display: 'inline',
+        paddingRight: '2px',
+        marginRight: '5px',
+        fontSize: '15px',
+        color: 'blue'
+    },
+    headingStyle:{
+        fontSize: '20px',
+    },
+    updateModal: {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    }
+}
 class Profile extends Component {
 
     constructor() {
@@ -41,8 +63,11 @@ class Profile extends Component {
             profileDetails: {},
             profileStats: {},
             modalIsOpen: false,
+            isPostModalOpen: false,
             fullnameRequired: "dispNone",
-            fullNameField: ""
+            fullNameField: "",
+            activeImageIndex: 0,
+            isDataFetched: false
         }
     }
 
@@ -66,6 +91,11 @@ class Profile extends Component {
                 that.setState({
                     postDetails: JSON.parse(this.responseText).data
                 });
+                that.setState({
+                    isDataFetched: true
+                });
+
+
                 console.log(that.state.postDetails);
             }
         });
@@ -103,8 +133,14 @@ class Profile extends Component {
     closeModalHandler = () => {
         this.setState({ modalIsOpen: false });
     }
+    closePostModalHandler = () => {
+        this.setState({ isPostModalOpen: false });
+    }
     openModelHandler = () => {
         this.setState({ modalIsOpen: true });
+    }
+    openPostModelHandler = () => {
+        this.setState({ isPostModalOpen: true });
     }
     inputNameChangeHandler = (e) => {
         //const profDetails = this.state.profileDetails
@@ -118,11 +154,43 @@ class Profile extends Component {
         this.setState({ profileDetails: profDetails });
         this.setState({ modalIsOpen: false });
     }
+    likeIconClicked = (index) =>{
+        let postDetails=this.state.postDetails;
+        if(postDetails[index].likes.count===this.state.postDetailsSnapshot[index].likes.count)
+             postDetails[index].likes.count++;
+        else 
+             postDetails[index].likes.count--;
+        this.setState({postDetails: postDetails});
+    }
+
+
+    onPostImageClickedHandler = (index) => {
+        this.setState({ activeImageIndex: index });
+        this.openPostModelHandler();
+    }
+
+    onCommentValueChanged = (e,index) => {
+        const commentSnapshot = this.state.commentTextField;
+        commentSnapshot[index]=e.target.value;
+        this.setState({commentTextField: commentSnapshot});
+        
+        console.log(this.state.commentTextField);
+    }
+    onAddCommentClicked =(index) => {
+        let comentInfoState= this.state.comments;
+        console.log(index);
+        comentInfoState[index].push({
+            'author': this.state.postDetails[index].user.username,
+            'comment': this.state.commentTextField[index]
+        });
+        this.setState({comments: comentInfoState});
+        console.log(this.state.comments);
+    }
     render() {
         return (
             <div>
-                <Header />
-                <br/><br/>
+                <Header profileUrl={this.state.profileDetails.profile_picture}/>
+                <br /><br />
                 <div className="profile_info">
                     <div id="avatar">
                         <Avatar aria-label="recipe" src={this.state.profileDetails.profile_picture}>
@@ -130,7 +198,7 @@ class Profile extends Component {
                     </div>
                     <div id="header-details">
                         <div>
-                            <Typography variant="subtitle"  >
+                            <Typography variant="subtitle1"  >
                                 {this.state.profileDetails.username}
                             </Typography>
                         </div>
@@ -157,11 +225,12 @@ class Profile extends Component {
                                     isOpen={this.state.modalIsOpen}
                                     contentLabel="Login"
                                     onRequestClose={this.closeModalHandler}
-
+                                    style={stylings.updateModal}
                                 >
                                     <Typography variant="headline" component="h6" >
                                         Edit
-                            </Typography>
+                                     </Typography>
+                                     <br/>
                                     <FormControl required>
                                         <InputLabel htmlFor="fullname">Full Name</InputLabel>
                                         <Input id="fullname" type="text" fullname={this.state.fullNameField} onChange={this.inputNameChangeHandler} />
@@ -169,23 +238,92 @@ class Profile extends Component {
                                             <span className="red">required</span>
                                         </FormHelperText>
                                     </FormControl>
+                                    <br/><br/><br/>
                                     <Button className="login-button" variant="contained" color="primary" onClick={this.onUpdateButtonClickHandler}>Update</Button>
                                 </Modal>
                             </div>
                         </div>
                     </div>
                 </div >
-                <br/><br/><br/>
+                <br /><br /><br />
                 <div className="image_posts">
                     <GridList cellHeight={160} cols={3} style={{ marginLeft: "15%", marginRight: "10%", textAlign: "center" }}>
                         {this.state.postDetails.map((post, index) => (
                             <GridListTile key={"postImg" + post.id} style={{ height: '300px', width: '300px' }}>
-                                <img src={post.images.standard_resolution.url} alt={post.caption.text} className="postImage" />
+                                <img src={post.images.standard_resolution.url} alt={post.caption.text} className="postImage" onClick={() => this.onPostImageClickedHandler(index)} />
                             </GridListTile>
                         ))}
                     </GridList>
                 </div>
+                {this.state.isDataFetched &&
+                    <div className="image_modal">
+                        <Modal
+                            ariaHideApp={false}
+                            isOpen={this.state.isPostModalOpen}
+                            
+                            contentLabel="Login"
+                            onRequestClose={this.closePostModalHandler}
 
+                        >
+                            <div className="postModalContainer">
+                                <div id="postImg">
+                                    <img src={this.state.postDetails[this.state.activeImageIndex].images.standard_resolution.url} alt={this.state.postDetails[this.state.activeImageIndex].caption.text} className="postModalImage" />
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div className="modalDetailPane">
+                                    <div id="titleBar">
+                                        <div id="modalAvatar">
+                                            <Avatar aria-label="recipe" src={this.state.profileDetails.profile_picture}>
+                                            </Avatar>
+                                        </div>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div id="modalUserName">
+                                            {this.state.postDetails[this.state.activeImageIndex].user.username}
+                                        </div>
+                                    </div>
+                                    <Divider />
+                                    <Typography variant="h5" style={stylings.headingStyle} >
+                                        {this.state.postDetails[this.state.activeImageIndex].caption.text}
+                                    </Typography>
+
+                                    <div>
+                                        {this.state.postDetails[this.state.activeImageIndex].tags.map(tag => (
+                                            <span key={"tags" + tag}>
+                                                <Typography display="inline" variant="caption" style={stylings.tagStyle}>#{tag}</Typography>
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <span>
+                                            {this.state.postDetailsSnapshot[this.state.activeImageIndex].likes.count == this.state.postDetails[this.state.activeImageIndex].likes.count ?
+                                                <FavoriteBorderOutlinedIcon onClick={() => this.likeIconClicked(this.state.activeImageIndex)} />
+                                                :
+                                                <FavoriteIcon onClick={() => this.likeIconClicked(this.state.activeImageIndex)} style={{ color: red[500] }} />}
+                                        </span>
+                                        <span>{this.state.postDetails[this.state.activeImageIndex].likes.count} Likes</span>
+                                    </div>
+                                    <br />
+                                    {this.state.comments[this.state.activeImageIndex].length !== 0 &&
+                                        this.state.comments[this.state.activeImageIndex].map((ele, i) => (
+                                            <div className="postedComments" key={this.state.activeImageIndex + "postedComment" + i}>
+                                                <span className="commentAuthor">{ele.author}:</span>
+                                                <span className="actualComment">{ele.comment}</span>
+                                            </div>
+                                        ))}
+                                    <br /><br /><br /><br /><br /><br /><br /><br />
+                                    <div>
+                                        <FormControl style={{ width: "100%", display: "flex", flexDirection: "row" }}>
+                                            <InputLabel htmlFor={"commentTextField" + this.state.activeImageIndex}>Add a comment</InputLabel>
+                                            <Input type="text" id={"commentTextField" + this.state.activeImageIndex} style={{ width: "80%" }} onChange={(e) => this.onCommentValueChanged(e, this.state.activeImageIndex)} />
+                                            <Button style={{ width: "10%", marginLeft: "15px" }} className="login-button" variant="contained" color="primary" onClick={() => this.onAddCommentClicked(this.state.activeImageIndex)}>Add</Button>
+                                        </FormControl>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </Modal>
+                    </div>}
             </div >
         )
     }

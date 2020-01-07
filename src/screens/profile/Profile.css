@@ -39,3 +39,24 @@
 #edit_button{
     margin-left: 20px;
 }
+.postModalContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+    height:100%;
+    width: 80%;
+}
+#postImg{
+    width:60%;
+    height:100%;
+}
+.postModalImage{
+    object-fit: fill;
+    width: 100%;
+    height: 100%
+    
+}
+#titleBar{
+    display: flex;
+    flex-direction: row;
+}
