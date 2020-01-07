@@ -48,8 +48,8 @@ const Header = function (props){
                                 )}
 
                             />
-                            <Avatar aria-label="recipe" style={{ float: "right", marginLeft: "10px", cursor: "pointer" }} onClick={handleClick} >
-                                A
+                            <Avatar aria-label="recipe" src={props.profileUrl} style={{ float: "right", marginLeft: "10px", cursor: "pointer" }} onClick={handleClick} >
+                                
                                 </Avatar>
                             <Menu
                                 id="simple-menu"
