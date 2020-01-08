@@ -21,6 +21,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 */
 
 const Header = function (props){
+   /* if(sessionStorage.getItem('access-token') == undefined && props.parent!="login")
+      props.history.push('/');*/
     const [anchorEl, setAnchorEl] = React.useState(null);
   
     const handleClick = event => {
@@ -32,9 +34,14 @@ const Header = function (props){
     };
     const handleLogout = () => {
         sessionStorage.removeItem('access-token');
+        props.history.push('/');
+    }
+    const handleMyAccountclicked = () => {
+        props.history.push('/profile');
     }
     const onLogoClickedHandler = () => {
         console.log('onLogoClickedHandler add routing here');
+        props.history.push('/home');
     }
    // render() {   
         return (
@@ -66,7 +73,7 @@ const Header = function (props){
                                 
                             >
                                  { props.parentPage =="home" &&
-                                <MenuItem onClick={handleClose}>My account</MenuItem>}
+                                <MenuItem onClick={()=>{handleClose(); handleMyAccountclicked();}}>My account</MenuItem>}
                                 <MenuItem onClick={()=>{handleClose(); handleLogout();}}>Logout</MenuItem>
                             </Menu>
                         </span>

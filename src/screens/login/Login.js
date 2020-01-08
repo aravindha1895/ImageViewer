@@ -62,6 +62,8 @@ class Login extends Component {
             return;
         } else {
             this.setState({ loginFormInvalid: "dispNone" });
+            sessionStorage.setItem('access-token',accessToken);
+            this.props.history.push('/home');
         }
     }
 
@@ -77,7 +79,7 @@ class Login extends Component {
         const classes = useStyles;
         return (
             <div>
-                <Header />
+                <Header parent="login" history={this.props.history} />
                 <div>&nbsp;</div>
                  <Card style={useStyles.card} variant="outlined">
                  <CardContent >

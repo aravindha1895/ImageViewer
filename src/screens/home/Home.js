@@ -84,7 +84,8 @@ class Home extends Component {
             postDetails: [],
             postDetailsSnapshot: [],
             commentTextField: [],
-            comments: []
+            comments: [],
+            profileDetails: {}
         }
     }
 
@@ -118,6 +119,25 @@ class Home extends Component {
         // xhr.setRequestHeader("Cache-Control", "no-cache");
         //    xhr.setRequestHeader("cor");
         xhr.send(data);
+
+
+        // Profile detail
+        
+        let dataProfile = null;
+        let xhrReleased = new XMLHttpRequest();
+        xhrReleased.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({
+                    profileDetails: JSON.parse(this.responseText).data
+                });
+            }
+
+        });
+
+        xhrReleased.open("GET", "https://api.instagram.com/v1/users/self/?access_token=8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
+        // xhrReleased.setRequestHeader("Cache-Control", "no-cache");
+        xhrReleased.send(dataProfile);
+
 
     }
     likeIconClicked = (index) =>{
@@ -158,7 +178,7 @@ class Home extends Component {
        // let index=0;
         return (
             <div>
-                <Header onSearchTextChanged={this.onSearchTextChangedHandler} profileUrl={this.state.profileDetails.profile_picture} parentPage="home" />
+                <Header history={this.props.history} onSearchTextChanged={this.onSearchTextChangedHandler} profileUrl={this.state.profileDetails.profile_picture} parentPage="home" />
                 <GridList cols={2} cellHeight={750} cols={2} className={classes.gridListMain}>
                     {this.state.postDetails.map((post, index) => (
                         <GridListTile key={"title" + post.id} style={{height:'100%'}}>

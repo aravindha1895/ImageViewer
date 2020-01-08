@@ -189,7 +189,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                <Header profileUrl={this.state.profileDetails.profile_picture} parentPage="profile" />
+                <Header history={this.props.history} profileUrl={this.state.profileDetails.profile_picture} parentPage="profile" />
                 <br /><br />
                 <div className="profile_info">
                     <div id="avatar">
