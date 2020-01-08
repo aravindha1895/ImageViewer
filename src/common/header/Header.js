@@ -11,18 +11,13 @@ import FormControl from '@material-ui/core/FormControl';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 
-// class Header extends Component {
 
-  
-   /* constructor() {
-        super();
-    }
-*/
 
 const Header = function (props){
-   /* if(sessionStorage.getItem('access-token') == undefined && props.parent!="login")
-      props.history.push('/');*/
+   if(sessionStorage.getItem('access-token') == null && props.parent!="login")
+      props.history.push('/');
     const [anchorEl, setAnchorEl] = React.useState(null);
   
     const handleClick = event => {
@@ -54,7 +49,7 @@ const Header = function (props){
                             <FilledInput id="outlined-basic" placeholder="Search..." variant="outlined"
                                 onChange={(e) => props.onSearchTextChanged(e)}
                                 startAdornment={(
-                                    <InputAdornment variant="standard" position="start" id="searchBoxIcon" >
+                                    <InputAdornment variant="standard" position="start" id="searchBoxIcon" style={{backgroundColor:"#c0c0c0"}}>
                                         <SearchOutlinedIcon />
 
                                     </InputAdornment>
@@ -73,7 +68,9 @@ const Header = function (props){
                                 
                             >
                                  { props.parentPage =="home" &&
-                                <MenuItem onClick={()=>{handleClose(); handleMyAccountclicked();}}>My account</MenuItem>}
+                                <MenuItem onClick={()=>{handleClose(); handleMyAccountclicked();}}>My account</MenuItem>
+                                }
+                                
                                 <MenuItem onClick={()=>{handleClose(); handleLogout();}}>Logout</MenuItem>
                             </Menu>
                         </span>

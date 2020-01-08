@@ -285,6 +285,7 @@ class Profile extends Component {
                                         </div>
                                     </div>
                                     <Divider />
+                                    <br/>
                                     <Typography variant="h5" style={stylings.headingStyle} >
                                         {this.state.postDetails[this.state.activeImageIndex].caption.text}
                                     </Typography>

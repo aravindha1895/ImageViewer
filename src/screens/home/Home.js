@@ -24,35 +24,7 @@ import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
 
 
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper
-    },
-    upcomingMoviesHeading: {
-        textAlign: 'center',
-        background: '#ff9999',
-        padding: '8px',
-        fontSize: '1rem'
-    },
-    gridListUpcomingMovies: {
-        flexWrap: 'nowrap',
-        transform: 'translateZ(0)',
-        width: '100%'
-    },
-    gridListMain: {
-        transform: 'translateZ(0)',
-        cursor: 'pointer'
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 240,
-        maxWidth: 240
-    },
-    title: {
-        color: theme.palette.primary.light,
-    }
-});
+const styles = theme => ({});
 const stylings ={
     tagStyle: {
         display: 'inline',
@@ -72,10 +44,7 @@ const cardStyle = {
     padding: 50,
 }
 
-const mediaStyle = {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-}
+
 class Home extends Component {
 
     currentIndex =0;
@@ -91,7 +60,7 @@ class Home extends Component {
         }
     }
 
-    componentWillMount() {
+    componentWillMount() { 
         let data = null;
         let xhr = new XMLHttpRequest();
         let that = this;
@@ -176,14 +145,6 @@ class Home extends Component {
         this.setState({postDetails: cardsToDisplay});
     }
     formatDate = (date) =>{
-      //  dd/mm/yyyy HH:MM:SS
-        var monthNames = [
-          "January", "February", "March",
-          "April", "May", "June", "July",
-          "August", "September", "October",
-          "November", "December"
-        ];
-      
         var day = date.getDate();
         var monthIndex = date.getMonth();
         var year = date.getFullYear();

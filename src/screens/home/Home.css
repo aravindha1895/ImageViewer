@@ -12,3 +12,10 @@
 .commentAuthor{
     font-weight: bold;
 }
+
+[class*=MuiFilledInput-root],#searchBoxIcon{
+    background-color:  #c0c0c0 !important;
+}
+.MuiInputBase-input-30 :focus{ 
+    border: none;
+}
