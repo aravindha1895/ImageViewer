@@ -35,7 +35,7 @@ const stylings ={
         paddingRight: '2px',
         marginRight: '5px',
         fontSize: '15px',
-        color: 'blue'
+        color: '#00FFFF'
     },
     headingStyle:{
         fontSize: '20px',
@@ -67,7 +67,8 @@ class Profile extends Component {
             fullnameRequired: "dispNone",
             fullNameField: "",
             activeImageIndex: 0,
-            isDataFetched: false
+            isDataFetched: false,
+            accessToken: sessionStorage.getItem('access-token')
         }
     }
 
@@ -100,7 +101,7 @@ class Profile extends Component {
             }
         });
 
-        xhr.open("GET", "https://api.instagram.com/v1/users/self/media/recent?access_token=8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
+        xhr.open("GET", "https://api.instagram.com/v1/users/self/media/recent?access_token="+this.state.accessToken);
         // xhr.setRequestHeader("Cache-Control", "no-cache");
         //    xhr.setRequestHeader("cor");
         xhr.send(data);
@@ -125,7 +126,7 @@ class Profile extends Component {
 
         });
 
-        xhrReleased.open("GET", "https://api.instagram.com/v1/users/self/?access_token=8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
+        xhrReleased.open("GET", "https://api.instagram.com/v1/users/self/?access_token="+this.state.accessToken);
         // xhrReleased.setRequestHeader("Cache-Control", "no-cache");
         xhrReleased.send(dataProfile);
 
@@ -193,9 +194,10 @@ class Profile extends Component {
                 <br /><br />
                 <div className="profile_info">
                     <div id="avatar">
-                        <Avatar aria-label="recipe" src={this.state.profileDetails.profile_picture}>
+                        <Avatar size="medium" aria-label="recipe" src={this.state.profileDetails.profile_picture}>
                         </Avatar>
                     </div>
+                   
                     <div id="header-details">
                         <div>
                             <Typography variant="subtitle1"  >
@@ -211,6 +213,7 @@ class Profile extends Component {
                             <span className="stat">Followed By: {this.state.profileStats.followed_by}</span>
                             </div>
                         </Typography>
+                        <br/>
                         <div id="editSection">
                             <div>
                                 {this.state.profileDetails.full_name}
