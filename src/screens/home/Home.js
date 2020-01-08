@@ -58,7 +58,8 @@ const stylings ={
         display: 'inline',
         paddingRight: '2px',
         fontSize: '15px',
-        color: 'blue'
+        color: '#00FFFF',
+        marginRight: '5px'
     },
     headingStyle:{
         fontSize: '20px',
@@ -85,7 +86,8 @@ class Home extends Component {
             postDetailsSnapshot: [],
             commentTextField: [],
             comments: [],
-            profileDetails: {}
+            profileDetails: {},
+            accessToken: sessionStorage.getItem('access-token')
         }
     }
 
@@ -115,7 +117,7 @@ class Home extends Component {
             }
         });
 
-        xhr.open("GET", "https://api.instagram.com/v1/users/self/media/recent?access_token=8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
+        xhr.open("GET", "https://api.instagram.com/v1/users/self/media/recent?access_token="+this.state.accessToken);
         // xhr.setRequestHeader("Cache-Control", "no-cache");
         //    xhr.setRequestHeader("cor");
         xhr.send(data);
@@ -134,7 +136,7 @@ class Home extends Component {
 
         });
 
-        xhrReleased.open("GET", "https://api.instagram.com/v1/users/self/?access_token=8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784");
+        xhrReleased.open("GET", "https://api.instagram.com/v1/users/self/?access_token="+this.state.accessToken);
         // xhrReleased.setRequestHeader("Cache-Control", "no-cache");
         xhrReleased.send(dataProfile);
 
@@ -173,6 +175,21 @@ class Home extends Component {
         });
         this.setState({postDetails: cardsToDisplay});
     }
+    formatDate = (date) =>{
+      //  dd/mm/yyyy HH:MM:SS
+        var monthNames = [
+          "January", "February", "March",
+          "April", "May", "June", "July",
+          "August", "September", "October",
+          "November", "December"
+        ];
+      
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+        monthIndex = monthIndex+1 <10? '0'+(monthIndex+1): monthIndex+1;
+        return day + '/' + monthIndex + '/' + year+ ' '+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    }
     render() {
         const { classes } = this.props;
        // let index=0;
@@ -182,16 +199,18 @@ class Home extends Component {
                 <GridList cols={2} cellHeight={750} cols={2} className={classes.gridListMain}>
                     {this.state.postDetails.map((post, index) => (
                         <GridListTile key={"title" + post.id} style={{height:'100%'}}>
+                            <Card style={{ cardStyle }} variant="outlined">
+                          
                             <CardHeader
                                 avatar={
                                     <Avatar aria-label="recipe" src={post.user.profile_picture}>
                                     </Avatar>
                                 }
                                 title={post.user.username}
-                                subheader={post.created_time}
+                                 
+                                subheader={this.formatDate(new Date(parseInt(post.created_time)))}
                             >
                             </CardHeader>
-                            <Card style={{ cardStyle }} variant="outlined">
                                 <CardContent>
                                     <img src={post.images.standard_resolution.url} alt={post.caption.text} className="postImage" />
 
