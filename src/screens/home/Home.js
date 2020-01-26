@@ -3,13 +3,13 @@ import Header from '../../common/header/Header';
 import './Home.css';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+// import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
@@ -20,7 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import { green } from '@material-ui/core/colors';
+// import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
 
 
@@ -80,9 +80,9 @@ class Home extends Component {
                 that.setState({
                     postDetails: JSON.parse(this.responseText).data
                 });
-                console.log(that.state.postDetailsSnapshot);
+               /* console.log(that.state.postDetailsSnapshot);
                 console.log(that.state.coments);
-                console.log(that.state.commentTextField);
+                console.log(that.state.commentTextField);*/
             }
         });
 
@@ -140,7 +140,7 @@ class Home extends Component {
         console.log(e.target.value);
         console.log(this.state.postDetailsSnapshot[0].caption.text.indexOf("join"));
         let cardsToDisplay = this.state.postDetailsSnapshot.filter((post)=>{
-           return post.caption.text.toUpperCase().indexOf(""+e.target.value.toUpperCase())!=-1
+           return post.caption.text.toUpperCase().indexOf(""+e.target.value.toUpperCase())!==-1
         });
         this.setState({postDetails: cardsToDisplay});
     }
@@ -155,9 +155,11 @@ class Home extends Component {
         const { classes } = this.props;
        // let index=0;
         return (
+           
             <div>
+                
                 <Header history={this.props.history} onSearchTextChanged={this.onSearchTextChangedHandler} profileUrl={this.state.profileDetails.profile_picture} parentPage="home" />
-                <GridList cols={2} cellHeight={750} cols={2} className={classes.gridListMain}>
+                <GridList cols={2} cellHeight={750}  className={classes.gridListMain}>
                     {this.state.postDetails.map((post, index) => (
                         <GridListTile key={"title" + post.id} style={{height:'100%'}}>
                             <Card style={{ cardStyle }} variant="outlined">
@@ -190,7 +192,7 @@ class Home extends Component {
                                     <br/>
                                     <div>
                                         <span> 
-                                        {this.state.postDetailsSnapshot[index].likes.count==post.likes.count?
+                                        {this.state.postDetailsSnapshot[index].likes.count===post.likes.count?
                                         <FavoriteBorderOutlinedIcon onClick={()=>this.likeIconClicked(index)}  />
                                         :
                                         <FavoriteIcon onClick={()=>this.likeIconClicked(index)}  style={{ color: red[500] }}/>}
@@ -221,7 +223,9 @@ class Home extends Component {
                     ))}
 
                 </GridList>
+                 
             </div>
+            
         )
     }
 }

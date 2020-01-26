@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Header.css';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FilledInput from '@material-ui/core/FilledInput';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Visibility from '@material-ui/icons/Visibility';
-import { Input } from '@material-ui/core';
-import FormControl from '@material-ui/core/FormControl';
+// import OutlinedInput from '@material-ui/core/OutlinedInput';
+// import Visibility from '@material-ui/icons/Visibility';
+// import { Input } from '@material-ui/core';
+// import FormControl from '@material-ui/core/FormControl';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 
 
 
 const Header = function (props){
-   if(sessionStorage.getItem('access-token') == null && props.parent!="login")
+   if(sessionStorage.getItem('access-token') == null && props.parent!=="login")
       props.history.push('/');
     const [anchorEl, setAnchorEl] = React.useState(null);
   
@@ -35,7 +35,7 @@ const Header = function (props){
         props.history.push('/profile');
     }
     const onLogoClickedHandler = () => {
-        console.log('onLogoClickedHandler add routing here');
+       // console.log('onLogoClickedHandler add routing here');
         props.history.push('/home');
     }
    // render() {   
@@ -43,9 +43,9 @@ const Header = function (props){
             <div>
                 <header className="app-header" >
                     <p id="appName" onClick={()=>{onLogoClickedHandler();}}> Image Viewer </p>
-                    {(props.parentPage =="home" || props.parentPage =="profile")?
+                    {(props.parentPage ==="home" || props.parentPage ==="profile")?
                         <span className="home-group" >
-                            { props.parentPage =="home" &&
+                            { props.parentPage ==="home" &&
                             <FilledInput id="outlined-basic" placeholder="Search..." variant="outlined"
                                 onChange={(e) => props.onSearchTextChanged(e)}
                                 startAdornment={(
@@ -67,7 +67,7 @@ const Header = function (props){
                                 open={Boolean(anchorEl)}
                                 
                             >
-                                 { props.parentPage =="home" &&
+                                 { props.parentPage ==="home" &&
                                 <MenuItem onClick={()=>{handleClose(); handleMyAccountclicked();}}>My account</MenuItem>
                                 }
                                 

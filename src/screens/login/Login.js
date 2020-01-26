@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Header from '../../common/header/Header';
 import './Login.css';
 
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 import Card from '@material-ui/core/Card';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 
 import Typography from '@material-ui/core/Typography';
@@ -16,7 +16,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 
 
-const customStyles = {
+/*const customStyles = {
     content: {
         top: '50%',
         left: '50%',
@@ -25,7 +25,7 @@ const customStyles = {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
     }
-};
+};*/
 const useStyles = {
     card: {
         margin: 'auto',
@@ -76,7 +76,7 @@ class Login extends Component {
     }
 
     render() {
-        const classes = useStyles;
+       // const classes = useStyles;
         return (
             <div>
                 <Header parent="login" history={this.props.history} />

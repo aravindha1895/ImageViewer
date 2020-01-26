@@ -3,13 +3,13 @@ import Header from '../../common/header/Header';
 import './Profile.css';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+//import GridListTileBar from '@material-ui/core/GridListTileBar';
+// import { withStyles } from '@material-ui/core/styles';
+// import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardHeader from '@material-ui/core/CardHeader';
+// import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
@@ -20,11 +20,11 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import { green } from '@material-ui/core/colors';
+// import { green } from '@material-ui/core/colors';
 import { red } from '@material-ui/core/colors';
 
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+// import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import Modal from 'react-modal';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -97,7 +97,7 @@ class Profile extends Component {
                 });
 
 
-                console.log(that.state.postDetails);
+                // console.log(that.state.postDetails);
             }
         });
 
@@ -120,8 +120,8 @@ class Profile extends Component {
                     profileStats: JSON.parse(this.responseText).data.counts
 
                 });
-                console.log(that.state.profileDetails);
-                console.log(that.state.profileStats);
+                // console.log(that.state.profileDetails);
+                // console.log(that.state.profileStats);
             }
 
         });
@@ -300,7 +300,7 @@ class Profile extends Component {
                                     <br />
                                     <div>
                                         <span>
-                                            {this.state.postDetailsSnapshot[this.state.activeImageIndex].likes.count == this.state.postDetails[this.state.activeImageIndex].likes.count ?
+                                            {this.state.postDetailsSnapshot[this.state.activeImageIndex].likes.count === this.state.postDetails[this.state.activeImageIndex].likes.count ?
                                                 <FavoriteBorderOutlinedIcon onClick={() => this.likeIconClicked(this.state.activeImageIndex)} />
                                                 :
                                                 <FavoriteIcon onClick={() => this.likeIconClicked(this.state.activeImageIndex)} style={{ color: red[500] }} />}
